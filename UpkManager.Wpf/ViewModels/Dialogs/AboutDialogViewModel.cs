@@ -6,34 +6,38 @@ using STR.DialogView.Domain.Contracts;
 using STR.MvvmCommon;
 
 
-namespace UpkManager.Wpf.ViewModels.Dialogs {
+namespace UpkManager.Wpf.ViewModels.Dialogs
+{
 
-  [Export]
-  [ViewModel("AboutDialogViewModel")]
-  public class AboutDialogViewModel : ObservableObject, IDialogViewModel {
+    [Export]
+    [ViewModel("AboutDialogViewModel")]
+    public class AboutDialogViewModel : ObservableObject, IDialogViewModel
+    {
 
-    #region Private Fields
+        #region Private Fields
 
-    private RelayCommand<RequestNavigateEventArgs> navigate;
+        private RelayCommand<RequestNavigateEventArgs> navigate;
 
-    private RelayCommand ok;
+        private RelayCommand ok;
 
-    #endregion Private Fields
+        #endregion Private Fields
 
-    #region Properties
+        #region Properties
 
-    public RelayCommand<RequestNavigateEventArgs> Navigate {
-      get { return navigate; }
-      set { SetField(ref navigate, value, () => Navigate); }
+        public RelayCommand<RequestNavigateEventArgs> Navigate
+        {
+            get { return navigate; }
+            set { SetField(ref navigate, value, () => Navigate); }
+        }
+
+        public RelayCommand Ok
+        {
+            get { return ok; }
+            set { SetField(ref ok, value, () => Ok); }
+        }
+
+        #endregion Properties
+
     }
-
-    public RelayCommand Ok {
-      get { return ok; }
-      set { SetField(ref ok, value, () => Ok); }
-    }
-
-    #endregion Properties
-
-  }
 
 }

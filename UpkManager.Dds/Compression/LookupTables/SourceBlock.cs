@@ -1,14 +1,16 @@
 ﻿
 
-namespace UpkManager.Dds.Compression.LookupTables {
+namespace UpkManager.Dds.Compression.LookupTables
+{
 
-  internal class SourceBlock {
+    internal class SourceBlock
+    {
 
-    public byte start;
-    public byte end;
+        public byte start;
+        public byte end;
 
-    public byte error;
+        public byte error;
 
-  }
+    }
 
 }

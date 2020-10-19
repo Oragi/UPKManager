@@ -13,13 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UpkManager.Wpf.Views {
-  /// <summary>
-  /// Interaction logic for HeaderTablesView.xaml
-  /// </summary>
-  public partial class HeaderTablesView : UserControl {
-    public HeaderTablesView() {
-      InitializeComponent();
+namespace UpkManager.Wpf.Views
+{
+    /// <summary>
+    /// Interaction logic for HeaderTablesView.xaml
+    /// </summary>
+    public partial class HeaderTablesView : UserControl
+    {
+        public HeaderTablesView()
+        {
+            InitializeComponent();
+        }
     }
-  }
 }

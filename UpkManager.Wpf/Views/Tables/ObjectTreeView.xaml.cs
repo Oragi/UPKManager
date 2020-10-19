@@ -13,13 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UpkManager.Wpf.Views.Tables {
-  /// <summary>
-  /// Interaction logic for ObjectTreeView.xaml
-  /// </summary>
-  public partial class ObjectTreeView : UserControl {
-    public ObjectTreeView() {
-      InitializeComponent();
+namespace UpkManager.Wpf.Views.Tables
+{
+    /// <summary>
+    /// Interaction logic for ObjectTreeView.xaml
+    /// </summary>
+    public partial class ObjectTreeView : UserControl
+    {
+        public ObjectTreeView()
+        {
+            InitializeComponent();
+        }
     }
-  }
 }

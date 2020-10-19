@@ -3,18 +3,20 @@
 using STR.Common.Contracts;
 
 
-namespace UpkManager.Entities {
+namespace UpkManager.Entities
+{
 
-  public class UpkManagerException : ModelBase {
+    public class UpkManagerException : ModelBase
+    {
 
-    public string Message { get; set; }
+        public string Message { get; set; }
 
-    public string StackTrace { get; set; }
+        public string StackTrace { get; set; }
 
-    public string MachineName { get; set; }
+        public string MachineName { get; set; }
 
-    public DateTime HappenedAt { get; set; }
+        public DateTime HappenedAt { get; set; }
 
-  }
+    }
 
 }

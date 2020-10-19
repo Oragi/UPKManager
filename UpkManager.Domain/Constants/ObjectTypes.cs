@@ -1,25 +1,27 @@
 ﻿
 
-namespace UpkManager.Domain.Constants {
+namespace UpkManager.Domain.Constants
+{
 
-  public enum ObjectTypes {
+    public enum ObjectTypes
+    {
 
-    Unknown,
+        Unknown,
 
-    ArchetypeObjectReference,
+        ArchetypeObjectReference,
 
-    None,
+        None,
 
-    ObjectRedirector,
+        ObjectRedirector,
 
-    ShadowMapTexture2D,
+        ShadowMapTexture2D,
 
-    SoundNodeWave,
+        SoundNodeWave,
 
-    Texture2D,
+        Texture2D,
 
-    TextureMovie
+        TextureMovie
 
-  }
+    }
 
 }

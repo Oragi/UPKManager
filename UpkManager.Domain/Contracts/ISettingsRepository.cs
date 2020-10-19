@@ -3,14 +3,16 @@
 using UpkManager.Domain.Models;
 
 
-namespace UpkManager.Domain.Contracts {
+namespace UpkManager.Domain.Contracts
+{
 
-  public interface ISettingsRepository {
+    public interface ISettingsRepository
+    {
 
-    Task<DomainSettings> LoadSettingsAsync();
+        Task<DomainSettings> LoadSettingsAsync();
 
-    Task SaveSettings(DomainSettings Settings);
+        Task SaveSettings(DomainSettings Settings);
 
-  }
+    }
 
 }

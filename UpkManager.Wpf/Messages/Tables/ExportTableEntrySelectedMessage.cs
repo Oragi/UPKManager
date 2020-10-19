@@ -3,14 +3,16 @@
 using UpkManager.Domain.Models.UpkFile.Tables;
 
 
-namespace UpkManager.Wpf.Messages.Tables {
+namespace UpkManager.Wpf.Messages.Tables
+{
 
-  public class ExportTableEntrySelectedMessage : MessageBase {
+    public class ExportTableEntrySelectedMessage : MessageBase
+    {
 
-    public ExportTableEntrySelectedMessage() : base(true) { }
+        public ExportTableEntrySelectedMessage() : base(true) { }
 
-    public DomainExportTableEntry ExportTableEntry { get; set; }
+        public DomainExportTableEntry ExportTableEntry { get; set; }
 
-  }
+    }
 
 }

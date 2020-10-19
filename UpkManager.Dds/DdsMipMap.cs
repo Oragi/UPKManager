@@ -1,26 +1,29 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
 
-namespace UpkManager.Dds {
+namespace UpkManager.Dds
+{
 
-  [SuppressMessage("ReSharper", "MemberCanBeInternal")]
-  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-  [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
-  public sealed class DdsMipMap {
+    [SuppressMessage("ReSharper", "MemberCanBeInternal")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Global")]
+    public sealed class DdsMipMap
+    {
 
-    internal DdsMipMap(int width, int height, byte[] mipMap = null) {
-      Width  = width;
-      Height = height;
+        internal DdsMipMap(int width, int height, byte[] mipMap = null)
+        {
+            Width = width;
+            Height = height;
 
-      MipMap = mipMap;
+            MipMap = mipMap;
+        }
+
+        public int Width { get; set; }
+
+        public int Height { get; set; }
+
+        public byte[] MipMap { get; set; }
+
     }
-
-    public int Width { get; set; }
-
-    public int Height { get; set; }
-
-    public byte[] MipMap { get; set; }
-
-  }
 
 }

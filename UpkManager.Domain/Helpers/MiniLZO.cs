@@ -71,10 +71,14 @@ namespace ManagedLZO
 
         private static readonly uint DICT_SIZE = 65536 + 3;
 
-        static MiniLZO() {
-            if ( IntPtr.Size == 8 ) {
+        static MiniLZO()
+        {
+            if (IntPtr.Size == 8)
+            {
                 DICT_SIZE = (65536 + 3) * 2;
-            } else {
+            }
+            else
+            {
                 DICT_SIZE = (65536 + 3);
             }
         }
@@ -526,7 +530,7 @@ namespace ManagedLZO
                                 } while (--t > 0);
                             }
                         }
-                        else if(!eof_found && !match_done)
+                        else if (!eof_found && !match_done)
                         {
                             copy_match = false;
 
@@ -579,7 +583,7 @@ namespace ManagedLZO
             }
         }
 
-        private unsafe static uint D_INDEX1(byte * input)
+        private unsafe static uint D_INDEX1(byte* input)
         {
             return D_MS(D_MUL(0x21, D_X3(input, 5, 5, 6)) >> 5, 0);
         }

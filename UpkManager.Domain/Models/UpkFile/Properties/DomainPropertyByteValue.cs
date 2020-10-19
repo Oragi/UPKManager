@@ -6,72 +6,81 @@ using UpkManager.Domain.Helpers;
 using UpkManager.Domain.Models.UpkFile.Tables;
 
 
-namespace UpkManager.Domain.Models.UpkFile.Properties {
+namespace UpkManager.Domain.Models.UpkFile.Properties
+{
 
-  public sealed class DomainPropertyByteValue : DomainPropertyNameValue {
+    public sealed class DomainPropertyByteValue : DomainPropertyNameValue
+    {
 
-    #region Properties
+        #region Properties
 
-    private byte? byteValue { get; set; }
+        private byte? byteValue { get; set; }
 
-    #endregion Properties
+        #endregion Properties
 
-    #region Domain Properties
+        #region Domain Properties
 
-    public override PropertyTypes PropertyType => PropertyTypes.ByteProperty;
+        public override PropertyTypes PropertyType => PropertyTypes.ByteProperty;
 
-    public override object PropertyValue => byteValue ?? base.PropertyValue;
+        public override object PropertyValue => byteValue ?? base.PropertyValue;
 
-    public override string PropertyString => byteValue.HasValue ? $"{byteValue.Value}" : base.PropertyString;
+        public override string PropertyString => byteValue.HasValue ? $"{byteValue.Value}" : base.PropertyString;
 
-    #endregion Domain Properties
+        #endregion Domain Properties
 
-    #region Domain Methods
+        #region Domain Methods
 
-    public override async Task ReadPropertyValue(ByteArrayReader reader, int size, DomainHeader header) {
-      if (size == 8) await base.ReadPropertyValue(reader, size, header);
-      else byteValue = reader.ReadByte();
-    }
-
-    public override void SetPropertyValue(object value) {
-      DomainNameTableIndex index = value as DomainNameTableIndex;
-
-      if (index == null) {
-        DomainNameTableEntry entry = value as DomainNameTableEntry;
-
-        if (entry != null) {
-          index = new DomainNameTableIndex();
-
-          index.SetNameTableIndex(entry);
+        public override async Task ReadPropertyValue(ByteArrayReader reader, int size, DomainHeader header)
+        {
+            if (size == 8) await base.ReadPropertyValue(reader, size, header);
+            else byteValue = reader.ReadByte();
         }
-      }
 
-      if (index != null) {
-        NameIndexValue = index;
+        public override void SetPropertyValue(object value)
+        {
+            DomainNameTableIndex index = value as DomainNameTableIndex;
 
-        return;
-      }
+            if (index == null)
+            {
+                DomainNameTableEntry entry = value as DomainNameTableEntry;
 
-      if (value is bool && byteValue.HasValue) byteValue = Convert.ToByte(value);
+                if (entry != null)
+                {
+                    index = new DomainNameTableIndex();
+
+                    index.SetNameTableIndex(entry);
+                }
+            }
+
+            if (index != null)
+            {
+                NameIndexValue = index;
+
+                return;
+            }
+
+            if (value is bool && byteValue.HasValue) byteValue = Convert.ToByte(value);
+        }
+
+        #endregion Domain Methods
+
+        #region DomainUpkBuilderBase Implementation
+
+        public override int GetBuilderSize()
+        {
+            BuilderSize = byteValue.HasValue ? sizeof(byte) : NameIndexValue.GetBuilderSize();
+
+            return BuilderSize;
+        }
+
+        public override async Task WriteBuffer(ByteArrayWriter Writer, int CurrentOffset)
+        {
+            if (byteValue.HasValue) Writer.WriteByte(byteValue.Value);
+            else await NameIndexValue.WriteBuffer(Writer, CurrentOffset);
+        }
+
+        #endregion DomainUpkBuilderBase Implementation
+
     }
-
-    #endregion Domain Methods
-
-    #region DomainUpkBuilderBase Implementation
-
-    public override int GetBuilderSize() {
-      BuilderSize = byteValue.HasValue ? sizeof(byte) : NameIndexValue.GetBuilderSize();
-
-      return BuilderSize;
-    }
-
-    public override async Task WriteBuffer(ByteArrayWriter Writer, int CurrentOffset) {
-      if (byteValue.HasValue) Writer.WriteByte(byteValue.Value);
-      else await NameIndexValue.WriteBuffer(Writer, CurrentOffset);
-    }
-
-    #endregion DomainUpkBuilderBase Implementation
-
-  }
 
 }

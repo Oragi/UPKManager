@@ -7,27 +7,30 @@ using UpkManager.Wpf.ViewEntities;
 using UpkManager.Wpf.ViewEntities.Tables;
 
 
-namespace UpkManager.Wpf.ViewModels.Tables {
+namespace UpkManager.Wpf.ViewModels.Tables
+{
 
-  [Export]
-  [ViewModel("ExportTableViewModel")]
-  public class ExportTableViewModel : ObservableObject {
+    [Export]
+    [ViewModel("ExportTableViewModel")]
+    public class ExportTableViewModel : ObservableObject
+    {
 
-    #region Private Fields
+        #region Private Fields
 
-    private ObservableCollection<ExportTableEntryViewEntity> exportTableEntries;
+        private ObservableCollection<ExportTableEntryViewEntity> exportTableEntries;
 
-    #endregion Private Fields
+        #endregion Private Fields
 
-    #region Properties
+        #region Properties
 
-    public ObservableCollection<ExportTableEntryViewEntity> ExportTableEntries {
-      get { return exportTableEntries; }
-      set { SetField(ref exportTableEntries, value, () => ExportTableEntries); }
+        public ObservableCollection<ExportTableEntryViewEntity> ExportTableEntries
+        {
+            get { return exportTableEntries; }
+            set { SetField(ref exportTableEntries, value, () => ExportTableEntries); }
+        }
+
+        #endregion Properties
+
     }
-
-    #endregion Properties
-
-  }
 
 }

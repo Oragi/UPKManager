@@ -4,18 +4,20 @@ using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 
 
-namespace UpkManager.Repository.Contracts {
+namespace UpkManager.Repository.Contracts
+{
 
-  public interface IRavenStorage {
+    public interface IRavenStorage
+    {
 
-    IDocumentStore Store { get; }
+        IDocumentStore Store { get; }
 
-    IAsyncDocumentSession Session { get; }
+        IAsyncDocumentSession Session { get; }
 
-    void Initialize(string DatabaseName, Assembly IndexAssembly = null);
+        void Initialize(string DatabaseName, Assembly IndexAssembly = null);
 
-    void Shutdown();
+        void Shutdown();
 
-  }
+    }
 
 }

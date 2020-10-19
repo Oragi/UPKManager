@@ -3,16 +3,18 @@
 using UpkManager.Domain.Constants;
 
 
-namespace UpkManager.Domain.Models.UpkFile.Objects.Textures {
+namespace UpkManager.Domain.Models.UpkFile.Objects.Textures
+{
 
-  public sealed class DomainObjectShadowMapTexture2D : DomainObjectTexture2D {
+    public sealed class DomainObjectShadowMapTexture2D : DomainObjectTexture2D
+    {
 
-    #region Domain Properties
+        #region Domain Properties
 
-    public override ObjectTypes ObjectType => ObjectTypes.ShadowMapTexture2D;
+        public override ObjectTypes ObjectType => ObjectTypes.ShadowMapTexture2D;
 
-    #endregion Domain Properties
+        #endregion Domain Properties
 
-  }
+    }
 
 }

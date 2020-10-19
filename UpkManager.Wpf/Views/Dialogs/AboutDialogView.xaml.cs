@@ -10,16 +10,19 @@ using UpkManager.Domain.Constants;
 using DialogNames = UpkManager.Wpf.Constants.DialogNames;
 
 
-namespace UpkManager.Wpf.Views.Dialogs {
+namespace UpkManager.Wpf.Views.Dialogs
+{
 
-  [Export(typeof(IDialogViewLocator))]
-  [ViewTag(Name=DialogNames.About)]
-  public partial class AboutDialogView : UserControl, IDialogViewLocator {
+    [Export(typeof(IDialogViewLocator))]
+    [ViewTag(Name = DialogNames.About)]
+    public partial class AboutDialogView : UserControl, IDialogViewLocator
+    {
 
-    public AboutDialogView() {
-      InitializeComponent();
+        public AboutDialogView()
+        {
+            InitializeComponent();
+        }
+
     }
-
-  }
 
 }

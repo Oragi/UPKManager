@@ -13,13 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UpkManager.Wpf.Views {
-  /// <summary>
-  /// Interaction logic for StatusBarView.xaml
-  /// </summary>
-  public partial class StatusBarView : UserControl {
-    public StatusBarView() {
-      InitializeComponent();
+namespace UpkManager.Wpf.Views
+{
+    /// <summary>
+    /// Interaction logic for StatusBarView.xaml
+    /// </summary>
+    public partial class StatusBarView : UserControl
+    {
+        public StatusBarView()
+        {
+            InitializeComponent();
+        }
     }
-  }
 }

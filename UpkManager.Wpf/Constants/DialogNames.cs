@@ -1,13 +1,15 @@
 ﻿
 
-namespace UpkManager.Wpf.Constants {
+namespace UpkManager.Wpf.Constants
+{
 
-  internal static class DialogNames {
+    internal static class DialogNames
+    {
 
-    public const string Settings = "Settings";
+        public const string Settings = "Settings";
 
-    public const string About = "About";
+        public const string About = "About";
 
-  }
+    }
 
 }

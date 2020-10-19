@@ -5,16 +5,18 @@ using UpkManager.Domain.Models;
 using UpkManager.Wpf.ViewEntities;
 
 
-namespace UpkManager.Wpf.Messages.FileListing {
+namespace UpkManager.Wpf.Messages.FileListing
+{
 
-  public class FileLoadedMessage : MessageBase {
+    public class FileLoadedMessage : MessageBase
+    {
 
-    public FileLoadedMessage() : base(true) { }
+        public FileLoadedMessage() : base(true) { }
 
-    public FileViewEntity FileViewEntity { get; set; }
+        public FileViewEntity FileViewEntity { get; set; }
 
-    public DomainUpkFile File { get; set; }
+        public DomainUpkFile File { get; set; }
 
-  }
+    }
 
 }

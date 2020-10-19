@@ -6,27 +6,30 @@ using STR.MvvmCommon;
 using UpkManager.Wpf.ViewEntities;
 
 
-namespace UpkManager.Wpf.ViewModels {
+namespace UpkManager.Wpf.ViewModels
+{
 
-  [Export]
-  [ViewModel("RebuildViewModel")]
-  public class RebuildViewModel : ObservableObject {
+    [Export]
+    [ViewModel("RebuildViewModel")]
+    public class RebuildViewModel : ObservableObject
+    {
 
-    #region Private Fields
+        #region Private Fields
 
-    private ObservableCollection<ExportedObjectViewEntity> exportsTree;
+        private ObservableCollection<ExportedObjectViewEntity> exportsTree;
 
-    #endregion Private Fields
+        #endregion Private Fields
 
-    #region Properties
+        #region Properties
 
-    public ObservableCollection<ExportedObjectViewEntity> ExportsTree {
-      get { return exportsTree; }
-      set { SetField(ref exportsTree, value, () => ExportsTree); }
+        public ObservableCollection<ExportedObjectViewEntity> ExportsTree
+        {
+            get { return exportsTree; }
+            set { SetField(ref exportsTree, value, () => ExportsTree); }
+        }
+
+        #endregion Properties
+
     }
-
-    #endregion Properties
-
-  }
 
 }

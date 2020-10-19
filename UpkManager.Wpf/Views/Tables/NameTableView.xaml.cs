@@ -1,14 +1,17 @@
 ﻿using System.Windows.Controls;
 
 
-namespace UpkManager.Wpf.Views.Tables {
+namespace UpkManager.Wpf.Views.Tables
+{
 
-  public partial class NameTableView : UserControl {
+    public partial class NameTableView : UserControl
+    {
 
-    public NameTableView() {
-      InitializeComponent();
+        public NameTableView()
+        {
+            InitializeComponent();
+        }
+
     }
-
-  }
 
 }

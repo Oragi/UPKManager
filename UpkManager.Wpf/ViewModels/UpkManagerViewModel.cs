@@ -8,50 +8,56 @@ using STR.MvvmCommon;
 using UpkManager.Wpf.ViewEntities;
 
 
-namespace UpkManager.Wpf.ViewModels {
+namespace UpkManager.Wpf.ViewModels
+{
 
-  [Export]
-  [ViewModel("UpkManagerViewModel")]
-  [SuppressMessage("ReSharper", "MemberCanBeInternal")]
-  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-  public sealed class UpkManagerViewModel : ObservableObject {
+    [Export]
+    [ViewModel("UpkManagerViewModel")]
+    [SuppressMessage("ReSharper", "MemberCanBeInternal")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    public sealed class UpkManagerViewModel : ObservableObject
+    {
 
-    #region Private Fields
+        #region Private Fields
 
-    private RelayCommandAsync<RoutedEventArgs> loaded;
+        private RelayCommandAsync<RoutedEventArgs> loaded;
 
-    private RelayCommand<CancelEventArgs> closing;
+        private RelayCommand<CancelEventArgs> closing;
 
-    private RelayCommand<SizeChangedEventArgs> sizeChanged;
+        private RelayCommand<SizeChangedEventArgs> sizeChanged;
 
-    private SettingsWindowViewEntity settings;
+        private SettingsWindowViewEntity settings;
 
-    #endregion Private Fields
+        #endregion Private Fields
 
-    #region Properties
+        #region Properties
 
-    public RelayCommandAsync<RoutedEventArgs> Loaded {
-      get { return loaded; }
-      set { SetField(ref loaded, value, () => Loaded); }
+        public RelayCommandAsync<RoutedEventArgs> Loaded
+        {
+            get { return loaded; }
+            set { SetField(ref loaded, value, () => Loaded); }
+        }
+
+        public RelayCommand<CancelEventArgs> Closing
+        {
+            get { return closing; }
+            set { SetField(ref closing, value, () => Closing); }
+        }
+
+        public RelayCommand<SizeChangedEventArgs> SizeChanged
+        {
+            get { return sizeChanged; }
+            set { SetField(ref sizeChanged, value, () => SizeChanged); }
+        }
+
+        public SettingsWindowViewEntity Settings
+        {
+            get { return settings; }
+            set { SetField(ref settings, value, () => Settings); }
+        }
+
+        #endregion Properties
+
     }
-
-    public RelayCommand<CancelEventArgs> Closing {
-      get { return closing; }
-      set { SetField(ref closing, value, () => Closing); }
-    }
-
-    public RelayCommand<SizeChangedEventArgs> SizeChanged {
-      get { return sizeChanged; }
-      set { SetField(ref sizeChanged, value, () => SizeChanged); }
-    }
-
-    public SettingsWindowViewEntity Settings {
-      get { return settings; }
-      set { SetField(ref settings, value, () => Settings); }
-    }
-
-    #endregion Properties
-
-  }
 
 }

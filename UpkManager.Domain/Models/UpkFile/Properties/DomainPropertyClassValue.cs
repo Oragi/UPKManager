@@ -1,16 +1,18 @@
 ﻿using UpkManager.Domain.Constants;
 
 
-namespace UpkManager.Domain.Models.UpkFile.Properties {
+namespace UpkManager.Domain.Models.UpkFile.Properties
+{
 
-  public sealed class DomainPropertyClassValue : DomainPropertyObjectValue {
+    public sealed class DomainPropertyClassValue : DomainPropertyObjectValue
+    {
 
-    #region Overrides
+        #region Overrides
 
-    public override PropertyTypes PropertyType => PropertyTypes.ClassProperty;
+        public override PropertyTypes PropertyType => PropertyTypes.ClassProperty;
 
-    #endregion Overrides
+        #endregion Overrides
 
-  }
+    }
 
 }

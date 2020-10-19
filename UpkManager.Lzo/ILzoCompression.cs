@@ -1,18 +1,20 @@
 ﻿using System.Threading.Tasks;
 
 
-namespace UpkManager.Lzo {
+namespace UpkManager.Lzo
+{
 
-  public interface ILzoCompression {
+    public interface ILzoCompression
+    {
 
-    string Version { get; }
+        string Version { get; }
 
-    string VersionDate { get; }
+        string VersionDate { get; }
 
-    Task<byte[]> Compress(byte[] source);
+        Task<byte[]> Compress(byte[] source);
 
-    Task Decompress(byte[] Source, byte[] Destination);
+        Task Decompress(byte[] Source, byte[] Destination);
 
-  }
+    }
 
 }

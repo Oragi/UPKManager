@@ -1,14 +1,17 @@
 ﻿using System.Windows;
 
 
-namespace UpkManager.Wpf.Views {
+namespace UpkManager.Wpf.Views
+{
 
-  internal sealed partial class UpkManagerView : Window {
+    internal sealed partial class UpkManagerView : Window
+    {
 
-    public UpkManagerView() {
-      InitializeComponent();
+        public UpkManagerView()
+        {
+            InitializeComponent();
+        }
+
     }
-
-  }
 
 }

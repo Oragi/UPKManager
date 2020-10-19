@@ -1,19 +1,21 @@
 ﻿
 
-namespace UpkManager.Domain.Models.UpkFile.Objects.Textures {
+namespace UpkManager.Domain.Models.UpkFile.Objects.Textures
+{
 
-  public class DomainMipMap {
+    public class DomainMipMap
+    {
 
-    #region Properties
+        #region Properties
 
-    public int Width { get; set; }
+        public int Width { get; set; }
 
-    public int Height { get; set; }
+        public int Height { get; set; }
 
-    public byte[] ImageData { get; set; }
+        public byte[] ImageData { get; set; }
 
-    #endregion Properties
+        #endregion Properties
 
-  }
+    }
 
 }

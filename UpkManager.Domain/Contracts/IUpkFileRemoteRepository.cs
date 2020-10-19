@@ -5,18 +5,20 @@ using System.Threading.Tasks;
 using UpkManager.Domain.Models;
 
 
-namespace UpkManager.Domain.Contracts {
+namespace UpkManager.Domain.Contracts
+{
 
-  public interface IUpkFileRemoteRepository {
+    public interface IUpkFileRemoteRepository
+    {
 
-    Task<List<DomainUpkFile>> LoadUpkFiles(CancellationToken token);
+        Task<List<DomainUpkFile>> LoadUpkFiles(CancellationToken token);
 
-    Task SaveUpkFile(DomainUpkFile File);
+        Task SaveUpkFile(DomainUpkFile File);
 
-    Task SaveUpkFile(List<DomainUpkFile> Files);
+        Task SaveUpkFile(List<DomainUpkFile> Files);
 
-    void Shutdown();
+        void Shutdown();
 
-  }
+    }
 
 }

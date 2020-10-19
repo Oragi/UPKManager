@@ -1,14 +1,17 @@
 ﻿using System.Windows.Controls;
 
 
-namespace UpkManager.Wpf.Views {
+namespace UpkManager.Wpf.Views
+{
 
-  internal sealed partial class FileListingView : UserControl {
+    internal sealed partial class FileListingView : UserControl
+    {
 
-    public FileListingView() {
-      InitializeComponent();
+        public FileListingView()
+        {
+            InitializeComponent();
+        }
+
     }
-
-  }
 
 }

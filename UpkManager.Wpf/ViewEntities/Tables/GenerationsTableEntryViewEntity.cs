@@ -1,52 +1,59 @@
 ﻿using STR.MvvmCommon;
 
 
-namespace UpkManager.Wpf.ViewEntities.Tables {
+namespace UpkManager.Wpf.ViewEntities.Tables
+{
 
-  public class GenerationsTableEntryViewEntity : ObservableObject {
+    public class GenerationsTableEntryViewEntity : ObservableObject
+    {
 
-    #region Private Fields
+        #region Private Fields
 
-    private bool isErrored;
-    private bool isSelected;
+        private bool isErrored;
+        private bool isSelected;
 
-    private int exportTableCount;
+        private int exportTableCount;
 
-    private int nameTableCount;
+        private int nameTableCount;
 
-    private int netObjectCount;
+        private int netObjectCount;
 
-    #endregion Private Fields
+        #endregion Private Fields
 
-    #region Properties
+        #region Properties
 
-    public bool IsErrored {
-      get { return isErrored; }
-      set { SetField(ref isErrored, value, () => IsErrored); }
+        public bool IsErrored
+        {
+            get { return isErrored; }
+            set { SetField(ref isErrored, value, () => IsErrored); }
+        }
+
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set { SetField(ref isSelected, value, () => IsSelected); }
+        }
+
+        public int ExportTableCount
+        {
+            get { return exportTableCount; }
+            set { SetField(ref exportTableCount, value, () => ExportTableCount); }
+        }
+
+        public int NameTableCount
+        {
+            get { return nameTableCount; }
+            set { SetField(ref nameTableCount, value, () => NameTableCount); }
+        }
+
+        public int NetObjectCount
+        {
+            get { return netObjectCount; }
+            set { SetField(ref netObjectCount, value, () => NetObjectCount); }
+        }
+
+        #endregion Properties
+
     }
-
-    public bool IsSelected {
-      get { return isSelected; }
-      set { SetField(ref isSelected, value, () => IsSelected); }
-    }
-
-    public int ExportTableCount {
-      get { return exportTableCount; }
-      set { SetField(ref exportTableCount, value, () => ExportTableCount); }
-    }
-
-    public int NameTableCount {
-      get { return nameTableCount; }
-      set { SetField(ref nameTableCount, value, () => NameTableCount); }
-    }
-
-    public int NetObjectCount {
-      get { return netObjectCount; }
-      set { SetField(ref netObjectCount, value, () => NetObjectCount); }
-    }
-
-    #endregion Properties
-
-  }
 
 }

@@ -13,13 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UpkManager.Wpf.Views.Tables {
-  /// <summary>
-  /// Interaction logic for GenerationsTableView.xaml
-  /// </summary>
-  public partial class GenerationsTableView : UserControl {
-    public GenerationsTableView() {
-      InitializeComponent();
+namespace UpkManager.Wpf.Views.Tables
+{
+    /// <summary>
+    /// Interaction logic for GenerationsTableView.xaml
+    /// </summary>
+    public partial class GenerationsTableView : UserControl
+    {
+        public GenerationsTableView()
+        {
+            InitializeComponent();
+        }
     }
-  }
 }

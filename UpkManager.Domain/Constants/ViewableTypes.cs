@@ -1,17 +1,19 @@
 ﻿
 
-namespace UpkManager.Domain.Constants {
+namespace UpkManager.Domain.Constants
+{
 
-  public enum ViewableTypes {
+    public enum ViewableTypes
+    {
 
-    Unknown,
+        Unknown,
 
-    Image,
+        Image,
 
-    Movie,
+        Movie,
 
-    Sound
+        Sound
 
-  }
+    }
 
 }

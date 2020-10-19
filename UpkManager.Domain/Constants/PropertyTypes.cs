@@ -1,29 +1,31 @@
 ﻿
 
-namespace UpkManager.Domain.Constants {
+namespace UpkManager.Domain.Constants
+{
 
-  public enum PropertyTypes {
+    public enum PropertyTypes
+    {
 
-    UnknownProperty,
+        UnknownProperty,
 
-    BoolProperty, // 0 bytes
+        BoolProperty, // 0 bytes
 
-    IntProperty, // int : 4 bytes
+        IntProperty, // int : 4 bytes
 
-    FloatProperty, // float : 4 bytes
+        FloatProperty, // float : 4 bytes
 
-    ObjectProperty, InterfaceProperty, ComponentProperty, ClassProperty, // object reference : 4 bytes
+        ObjectProperty, InterfaceProperty, ComponentProperty, ClassProperty, // object reference : 4 bytes
 
-    GuidProperty, // guid : 16 bytes
+        GuidProperty, // guid : 16 bytes
 
-    NameProperty, ByteProperty, // DomainNameIndex : 8 bytes
+        NameProperty, ByteProperty, // DomainNameIndex : 8 bytes
 
-    StrProperty, // uint + string : 4 + value of uint
+        StrProperty, // uint + string : 4 + value of uint
 
-    StructProperty, // variable : depends on structNameIndex
+        StructProperty, // variable : depends on structNameIndex
 
-    ArrayProperty // uint elements, elements * element size
+        ArrayProperty // uint elements, elements * element size
 
-  }
+    }
 
 }

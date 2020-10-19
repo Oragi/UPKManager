@@ -7,46 +7,52 @@ using Raven.Client.Documents;
 using UpkManager.Repository.Contracts;
 
 
-namespace UpkManager.Repository.Services {
+namespace UpkManager.Repository.Services
+{
 
-  [Export(typeof(IDocumentStoreManager))]
-  public sealed class DocumentStoreManager : IDocumentStoreManager {
+    [Export(typeof(IDocumentStoreManager))]
+    public sealed class DocumentStoreManager : IDocumentStoreManager
+    {
 
-    #region Private Fields
+        #region Private Fields
 
-    private readonly ConcurrentDictionary<string, Lazy<IDocumentStore>> stores = new ConcurrentDictionary<string, Lazy<IDocumentStore>>();
+        private readonly ConcurrentDictionary<string, Lazy<IDocumentStore>> stores = new ConcurrentDictionary<string, Lazy<IDocumentStore>>();
 
-    #endregion Private Fields
+        #endregion Private Fields
 
-    #region IDocumentStoreManager Implementation
+        #region IDocumentStoreManager Implementation
 
-    public IDocumentStore GetDocumentStoreFor(string DatabaseName) {
-      Lazy<IDocumentStore> store = createDocumentStore(DatabaseName);
+        public IDocumentStore GetDocumentStoreFor(string DatabaseName)
+        {
+            Lazy<IDocumentStore> store = createDocumentStore(DatabaseName);
 
-      return stores.GetOrAdd(DatabaseName, store).Value;
-    }
+            return stores.GetOrAdd(DatabaseName, store).Value;
+        }
 
-    #endregion IDocumentStoreManager Implementation
+        #endregion IDocumentStoreManager Implementation
 
-    #region Private Methods
+        #region Private Methods
 
-    private static Lazy<IDocumentStore> createDocumentStore(string databaseName) {
-      return new Lazy<IDocumentStore>(() => {
-        IDocumentStore documentStore = new DocumentStore {
-          Database    = databaseName,
-          Urls        = new [] {
+        private static Lazy<IDocumentStore> createDocumentStore(string databaseName)
+        {
+            return new Lazy<IDocumentStore>(() =>
+            {
+                IDocumentStore documentStore = new DocumentStore
+                {
+                    Database = databaseName,
+                    Urls = new[] {
             "https://raven.stricq.com"
           }
-        };
+                };
 
-        documentStore.Initialize();
+                documentStore.Initialize();
 
-        return documentStore;
-      });
+                return documentStore;
+            });
+        }
+
+        #endregion Private Methods
+
     }
-
-    #endregion Private Methods
-
-  }
 
 }

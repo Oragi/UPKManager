@@ -13,13 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UpkManager.Wpf.Views {
-  /// <summary>
-  /// Interaction logic for ModsView.xaml
-  /// </summary>
-  public partial class ModsView : UserControl {
-    public ModsView() {
-      InitializeComponent();
+namespace UpkManager.Wpf.Views
+{
+    /// <summary>
+    /// Interaction logic for ModsView.xaml
+    /// </summary>
+    public partial class ModsView : UserControl
+    {
+        public ModsView()
+        {
+            InitializeComponent();
+        }
     }
-  }
 }

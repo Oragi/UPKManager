@@ -5,12 +5,14 @@ using STR.Common.Messages;
 using UpkManager.Domain.Models;
 
 
-namespace UpkManager.Wpf.Messages.FileListing {
+namespace UpkManager.Wpf.Messages.FileListing
+{
 
-  public class FileListingLoadedMessage : MessageBase {
+    public class FileListingLoadedMessage : MessageBase
+    {
 
-    public List<DomainUpkFile> Allfiles { get; set; }
+        public List<DomainUpkFile> Allfiles { get; set; }
 
-  }
+    }
 
 }

@@ -9,38 +9,42 @@ using STR.MvvmCommon;
 using UpkManager.Wpf.ViewEntities;
 
 
-namespace UpkManager.Wpf.ViewModels {
+namespace UpkManager.Wpf.ViewModels
+{
 
-  [Export]
-  [ViewModel("ImageViewModel")]
-  [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-  [SuppressMessage("ReSharper", "MemberCanBeInternal")]
-  public sealed class ImageViewModel : ObservableObject {
+    [Export]
+    [ViewModel("ImageViewModel")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    [SuppressMessage("ReSharper", "MemberCanBeInternal")]
+    public sealed class ImageViewModel : ObservableObject
+    {
 
-    #region Private Fields
+        #region Private Fields
 
-    private BitmapSource texture = new BitmapImage(new Uri("pack://application:,,,/UpkManager.Wpf;component/Images/UpkManagerShield.png"));
+        private BitmapSource texture = new BitmapImage(new Uri("pack://application:,,,/UpkManager.Wpf;component/Images/UpkManagerShield.png"));
 
-    private ObservableCollection<MipMapViewEntity> mipMaps;
+        private ObservableCollection<MipMapViewEntity> mipMaps;
 
-    #endregion Private Fields
+        #endregion Private Fields
 
-    #region Properties
+        #region Properties
 
-    public BitmapSource Texture {
-      get { return texture; }
-      set { SetField(ref texture, value, () => Texture); }
+        public BitmapSource Texture
+        {
+            get { return texture; }
+            set { SetField(ref texture, value, () => Texture); }
+        }
+
+        public ObservableCollection<MipMapViewEntity> MipMaps
+        {
+            get { return mipMaps; }
+            set { SetField(ref mipMaps, value, () => MipMaps, () => IsLineVisible); }
+        }
+
+        public bool IsLineVisible => MipMaps != null;
+
+        #endregion Properties
+
     }
-
-    public ObservableCollection<MipMapViewEntity> MipMaps {
-      get { return mipMaps; }
-      set { SetField(ref mipMaps, value, () => MipMaps, () => IsLineVisible); }
-    }
-
-    public bool IsLineVisible => MipMaps != null;
-
-    #endregion Properties
-
-  }
 
 }

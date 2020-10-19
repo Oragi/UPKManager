@@ -4,54 +4,60 @@ using UpkManager.Domain.Constants;
 using UpkManager.Domain.Helpers;
 
 
-namespace UpkManager.Domain.Models.UpkFile.Properties {
+namespace UpkManager.Domain.Models.UpkFile.Properties
+{
 
-  public class DomainPropertyIntValue : DomainPropertyValueBase {
+    public class DomainPropertyIntValue : DomainPropertyValueBase
+    {
 
-    #region Properties
+        #region Properties
 
-    protected int IntValue { get; set; }
+        protected int IntValue { get; set; }
 
-    #endregion Properties
+        #endregion Properties
 
-    #region Domain Properties
+        #region Domain Properties
 
-    public override PropertyTypes PropertyType => PropertyTypes.IntProperty;
+        public override PropertyTypes PropertyType => PropertyTypes.IntProperty;
 
-    public override object PropertyValue => IntValue;
+        public override object PropertyValue => IntValue;
 
-    public override string PropertyString => $"{IntValue:N0}";
+        public override string PropertyString => $"{IntValue:N0}";
 
-    #endregion Domain Properties
+        #endregion Domain Properties
 
-    #region Domain Methods
+        #region Domain Methods
 
-    public override async Task ReadPropertyValue(ByteArrayReader reader, int size, DomainHeader header) {
-      IntValue = await Task.Run(() => reader.ReadInt32());
+        public override async Task ReadPropertyValue(ByteArrayReader reader, int size, DomainHeader header)
+        {
+            IntValue = await Task.Run(() => reader.ReadInt32());
+        }
+
+        public override void SetPropertyValue(object value)
+        {
+            if (!(value is int)) return;
+
+            IntValue = (int)value;
+        }
+
+        #endregion Domain Methods
+
+        #region DomainUpkBuilderBase Implementation
+
+        public override int GetBuilderSize()
+        {
+            BuilderSize = sizeof(int);
+
+            return BuilderSize;
+        }
+
+        public override async Task WriteBuffer(ByteArrayWriter Writer, int CurrentOffset)
+        {
+            await Task.Run(() => Writer.WriteInt32(IntValue));
+        }
+
+        #endregion DomainUpkBuilderBase Implementation
+
     }
-
-    public override void SetPropertyValue(object value) {
-      if (!(value is int)) return;
-
-      IntValue = (int)value;
-    }
-
-    #endregion Domain Methods
-
-    #region DomainUpkBuilderBase Implementation
-
-    public override int GetBuilderSize() {
-      BuilderSize = sizeof(int);
-
-      return BuilderSize;
-    }
-
-    public override async Task WriteBuffer(ByteArrayWriter Writer, int CurrentOffset) {
-      await Task.Run(() => Writer.WriteInt32(IntValue));
-    }
-
-    #endregion DomainUpkBuilderBase Implementation
-
-  }
 
 }

@@ -5,30 +5,33 @@ using UpkManager.Domain.Helpers;
 using UpkManager.Domain.Models.UpkFile.Tables;
 
 
-namespace UpkManager.Domain.Models.UpkFile.Properties {
+namespace UpkManager.Domain.Models.UpkFile.Properties
+{
 
-  public class DomainPropertyObjectValue : DomainPropertyIntValue {
+    public class DomainPropertyObjectValue : DomainPropertyIntValue
+    {
 
-    #region Properties
+        #region Properties
 
-    public DomainNameTableIndex ObjectIndexName { get; private set; }
+        public DomainNameTableIndex ObjectIndexName { get; private set; }
 
-    public override PropertyTypes PropertyType => PropertyTypes.ObjectProperty;
+        public override PropertyTypes PropertyType => PropertyTypes.ObjectProperty;
 
-    public override string PropertyString => ObjectIndexName.Name;
+        public override string PropertyString => ObjectIndexName.Name;
 
-    #endregion Properties
+        #endregion Properties
 
-    #region Domain Methods
+        #region Domain Methods
 
-    public override async Task ReadPropertyValue(ByteArrayReader reader, int size, DomainHeader header) {
-      await base.ReadPropertyValue(reader, size, header);
+        public override async Task ReadPropertyValue(ByteArrayReader reader, int size, DomainHeader header)
+        {
+            await base.ReadPropertyValue(reader, size, header);
 
-      ObjectIndexName = header.GetObjectTableEntry(IntValue)?.NameTableIndex;
+            ObjectIndexName = header.GetObjectTableEntry(IntValue)?.NameTableIndex;
+        }
+
+        #endregion Domain Methods
+
     }
-
-    #endregion Domain Methods
-
-  }
 
 }

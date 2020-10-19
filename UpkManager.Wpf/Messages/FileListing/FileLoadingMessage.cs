@@ -1,8 +1,9 @@
 ﻿using STR.Common.Messages;
 
 
-namespace UpkManager.Wpf.Messages.FileListing {
+namespace UpkManager.Wpf.Messages.FileListing
+{
 
-  public class FileLoadingMessage : MessageBase { }
+    public class FileLoadingMessage : MessageBase { }
 
 }

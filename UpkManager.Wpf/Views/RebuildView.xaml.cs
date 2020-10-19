@@ -13,13 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UpkManager.Wpf.Views {
-  /// <summary>
-  /// Interaction logic for RebuildView.xaml
-  /// </summary>
-  public partial class RebuildView : UserControl {
-    public RebuildView() {
-      InitializeComponent();
+namespace UpkManager.Wpf.Views
+{
+    /// <summary>
+    /// Interaction logic for RebuildView.xaml
+    /// </summary>
+    public partial class RebuildView : UserControl
+    {
+        public RebuildView()
+        {
+            InitializeComponent();
+        }
     }
-  }
 }

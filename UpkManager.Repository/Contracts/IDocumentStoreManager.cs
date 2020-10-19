@@ -1,12 +1,14 @@
 ﻿using Raven.Client.Documents;
 
 
-namespace UpkManager.Repository.Contracts {
+namespace UpkManager.Repository.Contracts
+{
 
-  public interface IDocumentStoreManager {
+    public interface IDocumentStoreManager
+    {
 
-    IDocumentStore GetDocumentStoreFor(string DatabaseName);
+        IDocumentStore GetDocumentStoreFor(string DatabaseName);
 
-  }
+    }
 
 }

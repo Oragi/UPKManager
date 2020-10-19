@@ -1,12 +1,14 @@
 ﻿using STR.Common.Messages;
 
 
-namespace UpkManager.Wpf.Messages.Status {
+namespace UpkManager.Wpf.Messages.Status
+{
 
-  public class StatusTickMessage : MessageBase {
+    public class StatusTickMessage : MessageBase
+    {
 
-    public StatusTickMessage() : base(true) { }
+        public StatusTickMessage() : base(true) { }
 
-  }
+    }
 
 }

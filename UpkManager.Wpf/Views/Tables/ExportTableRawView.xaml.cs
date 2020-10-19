@@ -1,14 +1,17 @@
 ﻿using System.Windows.Controls;
 
 
-namespace UpkManager.Wpf.Views.Tables {
+namespace UpkManager.Wpf.Views.Tables
+{
 
-  public partial class ExportTableRawView : UserControl {
+    public partial class ExportTableRawView : UserControl
+    {
 
-    public ExportTableRawView() {
-      InitializeComponent();
+        public ExportTableRawView()
+        {
+            InitializeComponent();
+        }
+
     }
-
-  }
 
 }

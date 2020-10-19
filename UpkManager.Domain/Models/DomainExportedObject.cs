@@ -2,26 +2,28 @@
 using System.IO;
 
 
-namespace UpkManager.Domain.Models {
+namespace UpkManager.Domain.Models
+{
 
-  public class DomainExportedObject {
+    public class DomainExportedObject
+    {
 
-    #region Properties
+        #region Properties
 
-    public string Filename { get; set; }
+        public string Filename { get; set; }
 
-    public DomainExportedObject Parent { get; set; }
+        public DomainExportedObject Parent { get; set; }
 
-    public List<DomainExportedObject> Children { get; set; }
+        public List<DomainExportedObject> Children { get; set; }
 
-    #endregion Properties
+        #endregion Properties
 
-    #region Domain Properties
+        #region Domain Properties
 
-    public string Name => Path.GetFileName(Filename);
+        public string Name => Path.GetFileName(Filename);
 
-    #endregion Domain Properties
+        #endregion Domain Properties
 
-  }
+    }
 
 }

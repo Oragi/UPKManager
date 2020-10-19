@@ -1,14 +1,17 @@
 ﻿using System.Windows.Controls;
 
 
-namespace UpkManager.Wpf.Views {
+namespace UpkManager.Wpf.Views
+{
 
-  public partial class HeaderView : UserControl {
+    public partial class HeaderView : UserControl
+    {
 
-    public HeaderView() {
-      InitializeComponent();
+        public HeaderView()
+        {
+            InitializeComponent();
+        }
+
     }
-
-  }
 
 }

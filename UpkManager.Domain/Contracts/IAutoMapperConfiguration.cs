@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 
 
-namespace UpkManager.Domain.Contracts {
+namespace UpkManager.Domain.Contracts
+{
 
-  public interface IAutoMapperConfiguration {
+    public interface IAutoMapperConfiguration
+    {
 
-    void RegisterMappings(IMapperConfigurationExpression config);
+        void RegisterMappings(IMapperConfigurationExpression config);
 
-  }
+    }
 
 }

@@ -6,27 +6,30 @@ using STR.MvvmCommon;
 using UpkManager.Wpf.ViewEntities.Tables;
 
 
-namespace UpkManager.Wpf.ViewModels.Tables {
+namespace UpkManager.Wpf.ViewModels.Tables
+{
 
-  [Export]
-  [ViewModel("ObjectTreeViewModel")]
-  public class ObjectTreeViewModel : ObservableObject {
+    [Export]
+    [ViewModel("ObjectTreeViewModel")]
+    public class ObjectTreeViewModel : ObservableObject
+    {
 
-    #region Private Fields
+        #region Private Fields
 
-    private ObservableCollection<ObjectTreeViewEntity> objectTree;
+        private ObservableCollection<ObjectTreeViewEntity> objectTree;
 
-    #endregion Private Fields
+        #endregion Private Fields
 
-    #region Properties
+        #region Properties
 
-    public ObservableCollection<ObjectTreeViewEntity> ObjectTree {
-      get { return objectTree; }
-      set { SetField(ref objectTree, value, () => ObjectTree); }
+        public ObservableCollection<ObjectTreeViewEntity> ObjectTree
+        {
+            get { return objectTree; }
+            set { SetField(ref objectTree, value, () => ObjectTree); }
+        }
+
+        #endregion Properties
+
     }
-
-    #endregion Properties
-
-  }
 
 }

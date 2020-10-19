@@ -23,109 +23,124 @@ using UpkManager.Repository.Contracts;
 using UpkManager.Repository.Indexes;
 
 
-namespace UpkManager.Repository.Services {
+namespace UpkManager.Repository.Services
+{
 
-  [Export(typeof(IUpkFileRemoteRepository))]
-  public sealed class UpkFileRavenRepository : IUpkFileRemoteRepository {
+    [Export(typeof(IUpkFileRemoteRepository))]
+    public sealed class UpkFileRavenRepository : IUpkFileRemoteRepository
+    {
 
-    #region Private Fields
+        #region Private Fields
 
-    private readonly IMapper mapper;
+        private readonly IMapper mapper;
 
-    private readonly IRavenStorage store;
+        private readonly IRavenStorage store;
 
-    #endregion Private Fields
+        #endregion Private Fields
 
-    #region Constructor
+        #region Constructor
 
-    [ImportingConstructor]
-    public UpkFileRavenRepository(IMapper Mapper, IRavenStorage Store) {
-      mapper = Mapper;
+        [ImportingConstructor]
+        public UpkFileRavenRepository(IMapper Mapper, IRavenStorage Store)
+        {
+            mapper = Mapper;
 
-      store = Store;
+            store = Store;
 
-      store.Initialize("UpkManager", typeof(UpkFileCommonIndex).Assembly);
-    }
+            store.Initialize("UpkManager", typeof(UpkFileCommonIndex).Assembly);
+        }
 
-    #endregion Constructor
+        #endregion Constructor
 
-    #region IUpkFileRemoteRepository Implementation
+        #region IUpkFileRemoteRepository Implementation
 
-    public async Task<List<DomainUpkFile>> LoadUpkFiles(CancellationToken token) {
-      try {
-        List<UpkFile> files = new List<UpkFile>();
+        public async Task<List<DomainUpkFile>> LoadUpkFiles(CancellationToken token)
+        {
+            try
+            {
+                List<UpkFile> files = new List<UpkFile>();
 
-        using(IAsyncDocumentSession session = store.Session) {
-          IRavenQueryable<UpkFile> query = session.Query<UpkFile, UpkFileCommonIndex>();
+                using (IAsyncDocumentSession session = store.Session)
+                {
+                    IRavenQueryable<UpkFile> query = session.Query<UpkFile, UpkFileCommonIndex>();
 
-          using(IAsyncEnumerator<StreamResult<UpkFile>> enumerator = await session.Advanced.StreamAsync(query, token)) {
-            while(await enumerator.MoveNextAsync()) {
-              files.Add(enumerator.Current.Document);
+                    using (IAsyncEnumerator<StreamResult<UpkFile>> enumerator = await session.Advanced.StreamAsync(query, token))
+                    {
+                        while (await enumerator.MoveNextAsync())
+                        {
+                            files.Add(enumerator.Current.Document);
+                        }
+                    }
+                }
+
+                return mapper.Map<List<DomainUpkFile>>(files);
             }
-          }
+            catch (TaskCanceledException) { }
+            catch (OperationCanceledException) { }
+
+            return new List<DomainUpkFile>();
         }
 
-        return mapper.Map<List<DomainUpkFile>>(files);
-      }
-      catch(TaskCanceledException) { }
-      catch(OperationCanceledException) { }
+        public async Task SaveUpkFile(DomainUpkFile File)
+        {
+            if (File == null) return;
 
-      return new List<DomainUpkFile>();
-    }
+            UpkFile file = mapper.Map<UpkFile>(File);
 
-    public async Task SaveUpkFile(DomainUpkFile File) {
-      if (File == null) return;
+            using (IAsyncDocumentSession session = store.Session)
+            {
+                if (String.IsNullOrEmpty(file.Id)) await session.StoreAsync(file);
+                else
+                {
+                    UpkFile dbFile = await session.LoadAsync<UpkFile>(file.Id);
 
-      UpkFile file = mapper.Map<UpkFile>(File);
+                    mapper.Map(file, dbFile);
+                }
 
-      using(IAsyncDocumentSession session = store.Session) {
-        if (String.IsNullOrEmpty(file.Id)) await session.StoreAsync(file);
-        else {
-          UpkFile dbFile = await session.LoadAsync<UpkFile>(file.Id);
+                await session.SaveChangesAsync();
 
-          mapper.Map(file, dbFile);
+                File.Id = file.Id;
+            }
         }
 
-        await session.SaveChangesAsync();
+        public async Task SaveUpkFile(List<DomainUpkFile> Files)
+        {
+            if (Files == null || !Files.Any()) return;
 
-        File.Id = file.Id;
-      }
-    }
+            List<UpkFile> files = mapper.Map<List<UpkFile>>(Files);
 
-    public async Task SaveUpkFile(List<DomainUpkFile> Files) {
-      if (Files == null || !Files.Any()) return;
+            using (IAsyncDocumentSession session = store.Session)
+            {
+                for (int index = 0; index < files.Count(f => !String.IsNullOrEmpty(f.Id)); index += 1024)
+                {
+                    List<UpkFile> dbFiles = (await session.LoadAsync<UpkFile>(files.Where(f => !String.IsNullOrEmpty(f.Id))
+                                                                                   .Skip(index).Take(1024)
+                                                                                   .Select(f => f.Id))).Where(result => result.Value != null)
+                                                                                                       .Select(result => result.Value)
+                                                                                                       .ToList();
 
-      List<UpkFile> files = mapper.Map<List<UpkFile>>(Files);
+                    var items = (from row1 in dbFiles
+                                 join row2 in files on row1.Id equals row2.Id
+                                 select new { DbFile = row1, File = row2 }).ToList();
 
-      using(IAsyncDocumentSession session = store.Session) {
-        for(int index = 0; index < files.Count(f => !String.IsNullOrEmpty(f.Id)); index += 1024) {
-          List<UpkFile> dbFiles = (await session.LoadAsync<UpkFile>(files.Where(f => !String.IsNullOrEmpty(f.Id))
-                                                                         .Skip(index).Take(1024)
-                                                                         .Select(f => f.Id))).Where(result => result.Value != null)
-                                                                                             .Select(result => result.Value)
-                                                                                             .ToList();
+                    items.ForEach(item => mapper.Map(item.File, item.DbFile));
+                }
 
-          var items = (from row1 in dbFiles
-                       join row2 in files on row1.Id equals row2.Id
-                     select new { DbFile = row1, File = row2 }).ToList();
+                foreach (UpkFile file in files.Where(f => String.IsNullOrEmpty(f.Id))) await session.StoreAsync(file);
 
-          items.ForEach(item => mapper.Map(item.File, item.DbFile));
+                await session.SaveChangesAsync();
+
+                Files.Zip(files, Tuple.Create).ForEach(t => t.Item1.Id = t.Item2.Id);
+            }
         }
 
-        foreach(UpkFile file in files.Where(f => String.IsNullOrEmpty(f.Id))) await session.StoreAsync(file);
+        public void Shutdown()
+        {
+            store.Shutdown();
+        }
 
-        await session.SaveChangesAsync();
+        #endregion IUpkFileRemoteRepository Implementation
 
-        Files.Zip(files, Tuple.Create).ForEach(t => t.Item1.Id = t.Item2.Id);
-      }
     }
-
-    public void Shutdown() {
-      store.Shutdown();
-    }
-
-    #endregion IUpkFileRemoteRepository Implementation
-
-  }
 
 }

@@ -4,12 +4,14 @@
 namespace UpkManager.Wpf.Views
 {
 
-  internal sealed partial class NotesView : UserControl {
+    internal sealed partial class NotesView : UserControl
+    {
 
-    public NotesView() {
-        InitializeComponent();
+        public NotesView()
+        {
+            InitializeComponent();
+        }
+
     }
-
-  }
 
 }

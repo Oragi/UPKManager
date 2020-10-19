@@ -3,18 +3,20 @@
 using UpkManager.Domain.Helpers;
 
 
-namespace UpkManager.Domain.Models.UpkFile.Tables {
+namespace UpkManager.Domain.Models.UpkFile.Tables
+{
 
-  public abstract class DomainExportTableEntryBuilderBase : DomainObjectTableEntryBase {
+    public abstract class DomainExportTableEntryBuilderBase : DomainObjectTableEntryBase
+    {
 
-    protected int BuilderSerialDataSize { get; set; }
+        protected int BuilderSerialDataSize { get; set; }
 
-    protected int BuilderSerialDataOffset { get; set; }
+        protected int BuilderSerialDataOffset { get; set; }
 
-    public abstract int GetObjectSize(int CurrentOffset);
+        public abstract int GetObjectSize(int CurrentOffset);
 
-    public abstract Task<ByteArrayWriter> WriteObjectBuffer();
+        public abstract Task<ByteArrayWriter> WriteObjectBuffer();
 
-  }
+    }
 
 }

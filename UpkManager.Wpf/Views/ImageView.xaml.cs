@@ -13,13 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace UpkManager.Wpf.Views {
-  /// <summary>
-  /// Interaction logic for ImageView.xaml
-  /// </summary>
-  public partial class ImageView : UserControl {
-    public ImageView() {
-      InitializeComponent();
+namespace UpkManager.Wpf.Views
+{
+    /// <summary>
+    /// Interaction logic for ImageView.xaml
+    /// </summary>
+    public partial class ImageView : UserControl
+    {
+        public ImageView()
+        {
+            InitializeComponent();
+        }
     }
-  }
 }

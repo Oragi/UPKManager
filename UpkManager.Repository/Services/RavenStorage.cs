@@ -8,46 +8,51 @@ using Raven.Client.Documents.Session;
 using UpkManager.Repository.Contracts;
 
 
-namespace UpkManager.Repository.Services {
+namespace UpkManager.Repository.Services
+{
 
-  [Export(typeof(IRavenStorage))]
-  public sealed class RavenStorage : IRavenStorage {
+    [Export(typeof(IRavenStorage))]
+    public sealed class RavenStorage : IRavenStorage
+    {
 
-    #region Private Fields
+        #region Private Fields
 
-    private readonly IDocumentStoreManager manager;
+        private readonly IDocumentStoreManager manager;
 
-    #endregion Private Fields
+        #endregion Private Fields
 
-    #region Constructor
+        #region Constructor
 
-    [ImportingConstructor]
-    public RavenStorage(IDocumentStoreManager Manager) {
-      manager = Manager;
-    }
+        [ImportingConstructor]
+        public RavenStorage(IDocumentStoreManager Manager)
+        {
+            manager = Manager;
+        }
 
-    #endregion Constructor
+        #endregion Constructor
 
-    #region IRavenStorage Implementation
+        #region IRavenStorage Implementation
 
-    public IDocumentStore Store { get; private set; }
+        public IDocumentStore Store { get; private set; }
 
-    public IAsyncDocumentSession Session => Store?.OpenAsyncSession();
+        public IAsyncDocumentSession Session => Store?.OpenAsyncSession();
 
-    public void Initialize(string DatabaseName, Assembly IndexAssembly = null) {
-      Store = manager.GetDocumentStoreFor(DatabaseName);
+        public void Initialize(string DatabaseName, Assembly IndexAssembly = null)
+        {
+            Store = manager.GetDocumentStoreFor(DatabaseName);
 
 #if DEBUG
-      if (IndexAssembly != null) IndexCreation.CreateIndexes(IndexAssembly, Store);
+            if (IndexAssembly != null) IndexCreation.CreateIndexes(IndexAssembly, Store);
 #endif
+        }
+
+        public void Shutdown()
+        {
+            Store?.Dispose();
+        }
+
+        #endregion IRavenStorage Implementation
+
     }
-
-    public void Shutdown() {
-      Store?.Dispose();
-    }
-
-    #endregion IRavenStorage Implementation
-
-  }
 
 }

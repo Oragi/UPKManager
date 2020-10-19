@@ -1,11 +1,13 @@
 ﻿
 
-namespace UpkManager.Dds.Compression.LookupTables {
+namespace UpkManager.Dds.Compression.LookupTables
+{
 
-  internal sealed class SingleColourLookup {
+    internal sealed class SingleColourLookup
+    {
 
-    public SourceBlock[] sources;
+        public SourceBlock[] sources;
 
-  }
+    }
 
 }

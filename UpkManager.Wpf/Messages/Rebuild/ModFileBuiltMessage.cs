@@ -3,12 +3,14 @@
 using UpkManager.Domain.Models;
 
 
-namespace UpkManager.Wpf.Messages.Rebuild {
+namespace UpkManager.Wpf.Messages.Rebuild
+{
 
-  public class ModFileBuiltMessage : MessageBase {
+    public class ModFileBuiltMessage : MessageBase
+    {
 
-    public DomainUpkFile UpkFile { get; set; }
+        public DomainUpkFile UpkFile { get; set; }
 
-  }
+    }
 
 }

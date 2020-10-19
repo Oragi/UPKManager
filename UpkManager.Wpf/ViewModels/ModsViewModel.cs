@@ -6,35 +6,39 @@ using STR.MvvmCommon;
 using UpkManager.Wpf.ViewEntities;
 
 
-namespace UpkManager.Wpf.ViewModels {
+namespace UpkManager.Wpf.ViewModels
+{
 
-  [Export]
-  [ViewModel("ModsViewModel")]
-  public class ModsViewModel : ObservableObject {
+    [Export]
+    [ViewModel("ModsViewModel")]
+    public class ModsViewModel : ObservableObject
+    {
 
-    #region Private Fields
+        #region Private Fields
 
-    private ObservableCollection<FileViewEntity> mods;
+        private ObservableCollection<FileViewEntity> mods;
 
-    #endregion Private Fields
+        #endregion Private Fields
 
-    #region Constructor
+        #region Constructor
 
-    public ModsViewModel() {
-      mods = new ObservableCollection<FileViewEntity>();
+        public ModsViewModel()
+        {
+            mods = new ObservableCollection<FileViewEntity>();
+        }
+
+        #endregion Constructor
+
+        #region Properties
+
+        public ObservableCollection<FileViewEntity> Mods
+        {
+            get { return mods; }
+            set { SetField(ref mods, value, () => Mods); }
+        }
+
+        #endregion Properties
+
     }
-
-    #endregion Constructor
-
-    #region Properties
-
-    public ObservableCollection<FileViewEntity> Mods {
-      get { return mods; }
-      set { SetField(ref mods, value, () => Mods); }
-    }
-
-    #endregion Properties
-
-  }
 
 }
