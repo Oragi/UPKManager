@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
+using System.Windows.Media.Imaging;
 using AutoMapper;
 
 using NAudio.Vorbis;
@@ -21,6 +22,7 @@ using STR.MvvmCommon.Contracts;
 using UpkManager.Dds;
 
 using UpkManager.Domain.Constants;
+using UpkManager.Domain.Models.UpkFile.Objects.Resources;
 using UpkManager.Domain.Models.UpkFile.Objects.Textures;
 
 using UpkManager.Wpf.Messages.FileListing;
@@ -129,6 +131,49 @@ namespace UpkManager.Wpf.Controllers
 
                         break;
                     }
+                case ViewableTypes.Font:
+                    {
+                        var fontexport = message.ExportTableEntry.DomainObject as DomainObjectFontResource;
+                        using (MemoryStream fontms = new MemoryStream(fontexport.Font))
+                        {
+                            var fontfamilies = FontConversion.Load(fontms);
+                            var fontfamily = fontfamilies.Families.First();
+
+                            using (Bitmap b = new Bitmap(600, 400))
+                            {
+                                using (Graphics g = Graphics.FromImage(b))
+                                {
+                                    g.Clear(Color.White); // White background
+                                    using (Font font = new Font(fontfamily, 24, FontStyle.Regular, GraphicsUnit.Pixel))
+                                    {
+                                        using (Font arial = new Font(new FontFamily("Arial"), 24, FontStyle.Regular, GraphicsUnit.Pixel))
+                                        {
+                                            using (SolidBrush solidBrush = new SolidBrush(Color.Black))
+                                            {
+                                                g.DrawString(String.Format("{0}, {1}, {2}px", font.Name, font.Style, 24), arial, solidBrush, new RectangleF(10, 10, 600, 600));
+                                            }
+                                        }
+                                        using (SolidBrush solidBrush = new SolidBrush(Color.Black))
+                                        {
+                                            g.DrawString("abcdefghijklmnopqrstuvwxyz", font, solidBrush, new RectangleF(10, 36, 600, 600));
+                                            g.DrawString("ABCDEFGHIJKLMNOPQRSTUVWXYZ", font, solidBrush, new RectangleF(10, 62, 600, 600));
+                                            g.DrawString("1234567890", font, solidBrush, new RectangleF(10, 88, 600, 600));
+                                            g.DrawString("The quick brown fox jumps over the lazy dog.", font, solidBrush, new RectangleF(10, 114, 600, 600));
+                                        }
+                                    }
+                                    using (Font font = new Font(fontfamily, 48, FontStyle.Regular, GraphicsUnit.Pixel))
+                                    {
+                                        using (SolidBrush solidBrush = new SolidBrush(Color.Black))
+                                        {
+                                            g.DrawString("The quick brown fox jumps over the lazy dog.", font, solidBrush, new RectangleF(10, 166, 600, 600));
+                                        }
+                                    }
+                                }
+                                viewModel.Texture = BitmapConversion.ToWpfBitmap(b);
+                            }
+                        }
+                        break;
+                    }
                 default:
                     {
                         clearViewModel();
@@ -158,6 +203,49 @@ namespace UpkManager.Wpf.Controllers
 
                         viewModel.Texture = image.BitmapSource;
 
+                        break;
+                    }
+                case ".ttf":
+                case ".otf":
+                    {
+                        using (MemoryStream fontms = new MemoryStream(File.ReadAllBytes(message.Filename)))
+                        {
+                            var fontfamilies = FontConversion.Load(fontms);
+                            var fontfamily = fontfamilies.Families.First();
+
+                            using (Bitmap b = new Bitmap(600, 400))
+                            {
+                                using (Graphics g = Graphics.FromImage(b))
+                                {
+                                    g.Clear(Color.White); // White background
+                                    using (Font font = new Font(fontfamily, 24, FontStyle.Regular, GraphicsUnit.Pixel))
+                                    {
+                                        using (Font arial = new Font(new FontFamily("Arial"), 24, FontStyle.Regular, GraphicsUnit.Pixel))
+                                        {
+                                            using (SolidBrush solidBrush = new SolidBrush(Color.Black))
+                                            {
+                                                g.DrawString(String.Format("{0}, {1}, {2}px", font.Name, font.Style, 24), arial, solidBrush, new RectangleF(10, 10, 600, 600));
+                                            }
+                                        }
+                                        using (SolidBrush solidBrush = new SolidBrush(Color.Black))
+                                        {
+                                            g.DrawString("abcdefghijklmnopqrstuvwxyz", font, solidBrush, new RectangleF(10, 36, 600, 600));
+                                            g.DrawString("ABCDEFGHIJKLMNOPQRSTUVWXYZ", font, solidBrush, new RectangleF(10, 62, 600, 600));
+                                            g.DrawString("1234567890", font, solidBrush, new RectangleF(10, 88, 600, 600));
+                                            g.DrawString("The quick brown fox jumps over the lazy dog.", font, solidBrush, new RectangleF(10, 114, 600, 600));
+                                        }
+                                    }
+                                    using (Font font = new Font(fontfamily, 48, FontStyle.Regular, GraphicsUnit.Pixel))
+                                    {
+                                        using (SolidBrush solidBrush = new SolidBrush(Color.Black))
+                                        {
+                                            g.DrawString("The quick brown fox jumps over the lazy dog.", font, solidBrush, new RectangleF(10, 166, 600, 600));
+                                        }
+                                    }
+                                }
+                                viewModel.Texture = BitmapConversion.ToWpfBitmap(b);
+                            }
+                        }
                         break;
                     }
             }

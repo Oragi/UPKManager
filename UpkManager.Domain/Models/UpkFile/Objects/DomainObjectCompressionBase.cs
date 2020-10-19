@@ -91,7 +91,7 @@ namespace UpkManager.Domain.Models.UpkFile.Objects
 
         public override async Task WriteBuffer(ByteArrayWriter Writer, int CurrentOffset)
         {
-            await Writer.WriteBytes(Unknown1);
+            Writer.WriteBytes(Unknown1);
 
             Writer.WriteInt32(CurrentOffset + Writer.Index + sizeof(int));
         }

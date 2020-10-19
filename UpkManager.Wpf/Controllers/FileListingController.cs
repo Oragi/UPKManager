@@ -70,6 +70,7 @@ namespace UpkManager.Wpf.Controllers
         private readonly FileListingViewModel viewModel;
         private readonly NotesViewModel notesViewModel;
         private readonly MainMenuViewModel menuViewModel;
+        private readonly RebuildController rebuildController;
 
         private readonly IMessenger messenger;
         private readonly IMapper mapper;
@@ -88,6 +89,7 @@ namespace UpkManager.Wpf.Controllers
             viewModel = ViewModel;
             notesViewModel = NotesViewModel;
             menuViewModel = MenuViewModel;
+            rebuildController = menuViewModel.rebuildController;
 
             messenger = Messenger;
             mapper = Mapper;
@@ -194,6 +196,7 @@ namespace UpkManager.Wpf.Controllers
             notesViewModel.SaveNotes = new RelayCommandAsync(onSaveNotesExecute, canSaveNotesExecute);
 
             menuViewModel.ReloadFiles = new RelayCommandAsync(onReloadFilesExecute, canReloadFilesExecute);
+            menuViewModel.LoadExportFiles = new RelayCommandAsync(onLoadExportFilesExecute, canLoadExportFilesExecute);
 
             menuViewModel.ExportFiles = new RelayCommandAsync(onExportFilesExecute, canExportFilesExecute);
 
@@ -232,6 +235,20 @@ namespace UpkManager.Wpf.Controllers
         }
 
         #endregion ReloadFiles Command
+
+        #region LoadExportFiles Command
+
+        private bool canLoadExportFilesExecute()
+        {
+            return !isLoadInProgress && !isScanInProgress;
+        }
+
+        private async Task onLoadExportFilesExecute()
+        {
+            rebuildController.loadExportFiles();
+        }
+
+        #endregion LoadExportFiles Command
 
         #region ExportFiles Command
 
@@ -393,6 +410,20 @@ namespace UpkManager.Wpf.Controllers
 
             bool loadError = false;
 
+            progress.IsLocalMode = true;
+
+            menuViewModel.IsOfflineMode = true;
+
+            viewModel.IsShowFilesWithType = false;
+
+            message = "not used";
+            remoteFiles = new List<DomainUpkFile>();
+            loadError = true;
+            progress.IsLocalMode = true;
+            menuViewModel.IsOfflineMode = true;
+            viewModel.IsShowFilesWithType = false;
+
+            /*
             try
             {
                 if (!menuViewModel.IsOfflineMode) remoteFiles = await remoteRepository.LoadUpkFiles(token);
@@ -419,6 +450,7 @@ namespace UpkManager.Wpf.Controllers
 
                 viewModel.IsShowFilesWithType = false;
             }
+            */
 
             remoteFiles.ForEach(f =>
             {
@@ -488,6 +520,10 @@ namespace UpkManager.Wpf.Controllers
             messenger.SendUi(new FileListingLoadedMessage { Allfiles = allFiles });
 
             isLoadInProgress = false;
+        }
+        private async Task loadExportFiles()
+        {
+            rebuildController.loadExportFiles();
         }
 
         private static int domainUpkfileComparison(DomainUpkFile left, DomainUpkFile right)

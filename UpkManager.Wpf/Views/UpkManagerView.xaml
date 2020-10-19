@@ -42,7 +42,7 @@
           </Grid.RowDefinitions>
 
           <TabControl Grid.Row="0" Margin="0,-1,7,6" Padding="0" Background="{StaticResource BackgroundColor}" BorderBrush="{StaticResource ContentControlBorderColor}"
-                      mvvm:FrameworkElementBehaviors.SizeChangedCommand="{Binding Path=SizeChanged}">
+                      mvvm:FrameworkElementBehaviors.SizeChangedCommand="{Binding Path=SizeChanged}" x:Name="MainTabControl">
             <TabControl.Resources>
               <Style TargetType="TabItem" BasedOn="{StaticResource TabItemStyle}" />
             </TabControl.Resources>
@@ -102,8 +102,10 @@
 
     </Grid>
 
-    <dv:DialogView Foreground="{StaticResource ForegroundColor}" />
+    <dv:DialogView Foreground="{StaticResource ForegroundColor}" >
+            <Button Content="Reload" HorizontalAlignment="Left" Margin="439,32,0,0" VerticalAlignment="Top" Width="74" Click="Button_Click"/>
+        </dv:DialogView>
 
-  </Grid>
+    </Grid>
 
 </Window>

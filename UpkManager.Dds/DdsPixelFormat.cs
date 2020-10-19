@@ -209,6 +209,7 @@ namespace UpkManager.Dds
             if (format.ToLowerInvariant().Contains("dxt3")) return FileFormat.DXT3;
             if (format.ToLowerInvariant().Contains("dxt5")) return FileFormat.DXT5;
             if (format.ToLowerInvariant().Contains("a8r8g8b8")) return FileFormat.A8R8G8B8;
+            if (format.ToLowerInvariant().Contains("a8b8g8r8")) return FileFormat.A8B8G8R8;
             if (format.ToLowerInvariant().Contains("g8")) return FileFormat.G8;
 
             throw new FormatException("Not a known DDS format.");
@@ -217,6 +218,7 @@ namespace UpkManager.Dds
         public static string BuildFileFormat(FileFormat format)
         {
             if (format == FileFormat.A8R8G8B8) return "PF_A8R8G8B8";
+            if (format == FileFormat.A8B8G8R8) return "PF_A8B8G8R8";
             if (format == FileFormat.DXT1) return "PF_DXT1";
             if (format == FileFormat.DXT5) return "PF_DXT5";
 

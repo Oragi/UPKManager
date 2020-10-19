@@ -24,7 +24,11 @@ namespace UpkManager.Domain.Constants
 
         StructProperty, // variable : depends on structNameIndex
 
-        ArrayProperty // uint elements, elements * element size
+        ArrayProperty, // uint elements, elements * element size
+
+        FontFullNameArray, FontStyleNameArray, FontFamilyNameArray, // uint names, DomainString x names
+
+        NameArray // uint names, DomainString x names
 
     }
 

@@ -51,13 +51,16 @@ namespace UpkManager.Dds
 
         public BitmapSource BitmapSource => new RgbaBitmapSource(largestMipMap, Width);
 
+        FileFormat FormatOnLoad = FileFormat.Unknown;
+        SquishFlags SquishOnLoad = SquishFlags.Unknown;
+
         #endregion Public Properties
 
         #region Public Methods
 
         public void GenerateMipMaps(int minMipWidth = 1, int minMipHeight = 1)
         {
-            int mipCount = DdsHeader.CountMipMaps(Width, Height);
+            int mipCount = 1;
 
             int mipWidth = Width;
             int mipHeight = Height;
@@ -102,26 +105,25 @@ namespace UpkManager.Dds
 
             if ((header.PixelFormat.Flags & (int)PixelFormatFlags.FourCC) != 0)
             {
-                SquishFlags squishFlags;
 
                 switch (header.PixelFormat.FourCC)
                 {
                     case FourCCFormat.Dxt1:
                         {
-                            squishFlags = SquishFlags.Dxt1;
+                            SquishOnLoad = SquishFlags.Dxt1;
 
                             break;
                         }
                     case FourCCFormat.Dxt3:
                         {
-                            squishFlags = SquishFlags.Dxt3;
+                            SquishOnLoad = SquishFlags.Dxt3;
 
                             break;
                         }
 
                     case FourCCFormat.Dxt5:
                         {
-                            squishFlags = SquishFlags.Dxt5;
+                            SquishOnLoad = SquishFlags.Dxt5;
 
                             break;
                         }
@@ -134,7 +136,7 @@ namespace UpkManager.Dds
                 // Compute size of compressed block area
                 //
                 int blockCount = (Width + 3) / 4 * ((Height + 3) / 4);
-                int blockSize = (squishFlags & SquishFlags.Dxt1) != 0 ? 8 : 16;
+                int blockSize = (SquishOnLoad & SquishFlags.Dxt1) != 0 ? 8 : 16;
                 //
                 // Allocate room for compressed blocks, and read data into it.
                 //
@@ -144,7 +146,7 @@ namespace UpkManager.Dds
                 //
                 // Now decompress..
                 //
-                largestMipMap = DdsSquish.DecompressImage(Width, Height, compressedBlocks, squishFlags, null);
+                largestMipMap = DdsSquish.DecompressImage(Width, Height, compressedBlocks, SquishOnLoad, null);
             }
             else
             {
@@ -152,39 +154,39 @@ namespace UpkManager.Dds
                 // We can only deal with the non-DXT formats we know about..  this is a bit of a mess..
                 // Sorry..
                 //
-                FileFormat fileFormat = FileFormat.Unknown;
+                FormatOnLoad = FileFormat.Unknown;
 
                 if ((header.PixelFormat.Flags == (int)PixelFormatFlags.RGBA) && (header.PixelFormat.RgbBitCount == 32) &&
                     (header.PixelFormat.RBitMask == 0x00ff0000) && (header.PixelFormat.GBitMask == 0x0000ff00) &&
-                    (header.PixelFormat.BBitMask == 0x000000ff) && (header.PixelFormat.ABitMask == 0xff000000)) fileFormat = FileFormat.A8R8G8B8;
+                    (header.PixelFormat.BBitMask == 0x000000ff) && (header.PixelFormat.ABitMask == 0xff000000)) FormatOnLoad = FileFormat.A8R8G8B8;
                 else if ((header.PixelFormat.Flags == (int)PixelFormatFlags.RGB) && (header.PixelFormat.RgbBitCount == 32) &&
                          (header.PixelFormat.RBitMask == 0x00ff0000) && (header.PixelFormat.GBitMask == 0x0000ff00) &&
-                         (header.PixelFormat.BBitMask == 0x000000ff) && (header.PixelFormat.ABitMask == 0x00000000)) fileFormat = FileFormat.X8R8G8B8;
+                         (header.PixelFormat.BBitMask == 0x000000ff) && (header.PixelFormat.ABitMask == 0x00000000)) FormatOnLoad = FileFormat.X8R8G8B8;
                 else if ((header.PixelFormat.Flags == (int)PixelFormatFlags.RGBA) && (header.PixelFormat.RgbBitCount == 32) &&
                          (header.PixelFormat.RBitMask == 0x000000ff) && (header.PixelFormat.GBitMask == 0x0000ff00) &&
-                         (header.PixelFormat.BBitMask == 0x00ff0000) && (header.PixelFormat.ABitMask == 0xff000000)) fileFormat = FileFormat.A8B8G8R8;
+                         (header.PixelFormat.BBitMask == 0x00ff0000) && (header.PixelFormat.ABitMask == 0xff000000)) FormatOnLoad = FileFormat.A8B8G8R8;
                 else if ((header.PixelFormat.Flags == (int)PixelFormatFlags.RGB) && (header.PixelFormat.RgbBitCount == 32) &&
                          (header.PixelFormat.RBitMask == 0x000000ff) && (header.PixelFormat.GBitMask == 0x0000ff00) &&
-                         (header.PixelFormat.BBitMask == 0x00ff0000) && (header.PixelFormat.ABitMask == 0x00000000)) fileFormat = FileFormat.X8B8G8R8;
+                         (header.PixelFormat.BBitMask == 0x00ff0000) && (header.PixelFormat.ABitMask == 0x00000000)) FormatOnLoad = FileFormat.X8B8G8R8;
                 else if ((header.PixelFormat.Flags == (int)PixelFormatFlags.RGBA) && (header.PixelFormat.RgbBitCount == 16) &&
                          (header.PixelFormat.RBitMask == 0x00007c00) && (header.PixelFormat.GBitMask == 0x000003e0) &&
-                         (header.PixelFormat.BBitMask == 0x0000001f) && (header.PixelFormat.ABitMask == 0x00008000)) fileFormat = FileFormat.A1R5G5B5;
+                         (header.PixelFormat.BBitMask == 0x0000001f) && (header.PixelFormat.ABitMask == 0x00008000)) FormatOnLoad = FileFormat.A1R5G5B5;
                 else if ((header.PixelFormat.Flags == (int)PixelFormatFlags.RGBA) && (header.PixelFormat.RgbBitCount == 16) &&
                          (header.PixelFormat.RBitMask == 0x00000f00) && (header.PixelFormat.GBitMask == 0x000000f0) &&
-                         (header.PixelFormat.BBitMask == 0x0000000f) && (header.PixelFormat.ABitMask == 0x0000f000)) fileFormat = FileFormat.A4R4G4B4;
+                         (header.PixelFormat.BBitMask == 0x0000000f) && (header.PixelFormat.ABitMask == 0x0000f000)) FormatOnLoad = FileFormat.A4R4G4B4;
                 else if ((header.PixelFormat.Flags == (int)PixelFormatFlags.RGB) && (header.PixelFormat.RgbBitCount == 24) &&
                          (header.PixelFormat.RBitMask == 0x00ff0000) && (header.PixelFormat.GBitMask == 0x0000ff00) &&
-                         (header.PixelFormat.BBitMask == 0x000000ff) && (header.PixelFormat.ABitMask == 0x00000000)) fileFormat = FileFormat.R8G8B8;
+                         (header.PixelFormat.BBitMask == 0x000000ff) && (header.PixelFormat.ABitMask == 0x00000000)) FormatOnLoad = FileFormat.R8G8B8;
                 else if ((header.PixelFormat.Flags == (int)PixelFormatFlags.RGB) && (header.PixelFormat.RgbBitCount == 16) &&
                          (header.PixelFormat.RBitMask == 0x0000f800) && (header.PixelFormat.GBitMask == 0x000007e0) &&
-                         (header.PixelFormat.BBitMask == 0x0000001f) && (header.PixelFormat.ABitMask == 0x00000000)) fileFormat = FileFormat.R5G6B5;
+                         (header.PixelFormat.BBitMask == 0x0000001f) && (header.PixelFormat.ABitMask == 0x00000000)) FormatOnLoad = FileFormat.R5G6B5;
                 else if ((header.PixelFormat.Flags == (int)PixelFormatFlags.Gray) && (header.PixelFormat.RgbBitCount == 8) &&
                          (header.PixelFormat.RBitMask == 0x000000ff) && (header.PixelFormat.GBitMask == 0x00000000) &&
-                         (header.PixelFormat.BBitMask == 0x00000000) && (header.PixelFormat.ABitMask == 0x00000000)) fileFormat = FileFormat.G8;
+                         (header.PixelFormat.BBitMask == 0x00000000) && (header.PixelFormat.ABitMask == 0x00000000)) FormatOnLoad = FileFormat.G8;
                 //
                 // If fileFormat is still invalid, then it's an unsupported format.
                 //
-                if (fileFormat == FileFormat.Unknown) throw new FormatException("File is not a supported DDS format");
+                if (FormatOnLoad == FileFormat.Unknown) throw new FormatException("File is not a supported DDS format");
                 //
                 // Size of a source pixel, in bytes
                 //
@@ -254,7 +256,7 @@ namespace UpkManager.Dds
                         //
                         for (int loop = 0; loop < srcPixelSize; loop++) pixelColour |= (uint)(readPixelData[srcPixelOffset + loop] << (8 * loop));
 
-                        switch (fileFormat)
+                        switch (FormatOnLoad)
                         {
                             case FileFormat.A8R8G8B8:
                                 {
@@ -400,11 +402,15 @@ namespace UpkManager.Dds
             }
             else
             {
+                // if (saveConfig.FileFormat == FileFormat.A8R8G8B8 || saveConfig.FileFormat == FileFormat.A8B8G8R8)
+                // return mipMap.MipMap;
+
                 int pixelWidth = (int)header.PitchOrLinearSize / Width;
 
                 int mipPitch = pixelWidth * mipMap.Width;
 
-                outputData = new byte[mipPitch * mipMap.Height];
+                // outputData = new byte[mipPitch * mipMap.Height];
+                outputData = new byte[mipMap.MipMap.Length];
 
                 outputData.Initialize();
 
@@ -416,6 +422,33 @@ namespace UpkManager.Dds
                     byte G = mipMap.MipMap[i + 1];
                     byte B = mipMap.MipMap[i + 2];
                     byte A = mipMap.MipMap[i + 3];
+
+                    switch (saveConfig.FileFormat)
+                    {
+                        case FileFormat.A8B8G8R8:
+                            outputData[i + 0] = A;
+                            outputData[i + 1] = B;
+                            outputData[i + 2] = G;
+                            outputData[i + 3] = R;
+                            break;
+                        case FileFormat.A8R8G8B8:
+                            // A R G B + PF_A8R8G8B8 -> too blue
+                            // R G B A + PF_A8R8G8B8 -> negative-ish
+                            // B G R A + PF_A8R8G8B8 -> correct!
+                            outputData[i + 0] = B;
+                            outputData[i + 1] = G;
+                            outputData[i + 2] = R;
+                            outputData[i + 3] = A;
+                            break;
+                        default:
+                            outputData[i + 0] = A;
+                            outputData[i + 1] = G;
+                            outputData[i + 2] = B;
+                            outputData[i + 3] = A;
+                            break;
+                    }
+
+                    continue;
 
                     switch (saveConfig.FileFormat)
                     {

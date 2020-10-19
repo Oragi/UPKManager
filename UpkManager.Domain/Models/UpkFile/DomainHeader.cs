@@ -313,7 +313,7 @@ namespace UpkManager.Domain.Models.UpkFile
 
             writer.WriteInt32(BuilderDependsTableOffset);
 
-            await writer.WriteBytes(Guid);
+            writer.WriteBytes(Guid);
 
             writer.WriteInt32(GenerationTable.Count);
 
@@ -514,7 +514,7 @@ namespace UpkManager.Domain.Models.UpkFile
         {
             byte[] bytes = Enumerable.Repeat((byte)0, ExportTable.Count * sizeof(uint)).ToArray();
 
-            await writer.WriteBytes(bytes);
+            writer.WriteBytes(bytes);
         }
 
         #region External Code

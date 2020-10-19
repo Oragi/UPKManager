@@ -32,6 +32,12 @@ namespace UpkManager.Domain.Models.UpkFile.Properties
         {
             floatValue = await Task.Run(() => reader.ReadSingle());
         }
+        public override void SetPropertyValue(object value)
+        {
+            if (!(value is float)) return;
+
+            floatValue = (float)value;
+        }
 
         #endregion Domain Methods
 

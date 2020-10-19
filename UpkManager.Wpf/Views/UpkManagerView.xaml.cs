@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-
+using UpkManager.Wpf.Controllers;
 
 namespace UpkManager.Wpf.Views
 {
@@ -12,6 +12,9 @@ namespace UpkManager.Wpf.Views
             InitializeComponent();
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+        }
     }
 
 }

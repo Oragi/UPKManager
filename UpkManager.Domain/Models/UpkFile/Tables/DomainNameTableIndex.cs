@@ -68,6 +68,10 @@ namespace UpkManager.Domain.Models.UpkFile.Tables
 
         #endregion DomainUpkBuilderBase Implementation
 
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
 }

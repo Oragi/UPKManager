@@ -90,7 +90,7 @@ namespace UpkManager.Domain.Models.UpkFile.Objects
         {
             await PropertyHeader.WriteBuffer(Writer, CurrentOffset);
 
-            await Writer.WriteBytes(AdditionalDataReader?.GetBytes());
+            Writer.WriteBytes(AdditionalDataReader?.GetBytes());
         }
 
         #endregion DomainUpkBuilderBase Implementation

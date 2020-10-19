@@ -98,6 +98,15 @@ namespace UpkManager.Domain.Models.UpkFile.Properties
 
             Enum.TryParse(TypeNameIndex?.Name, true, out type);
 
+            switch (NameIndex.Name)
+            {
+                case "FontFullNameArray":
+                case "FontStyleNameArray":
+                case "FontFamilyNameArray":
+                    type = PropertyTypes.NameArray;
+                    break;
+            }
+
             switch (type)
             {
                 case PropertyTypes.BoolProperty: return new DomainPropertyBoolValue();
@@ -113,6 +122,10 @@ namespace UpkManager.Domain.Models.UpkFile.Properties
                 case PropertyTypes.StrProperty: return new DomainPropertyStringValue();
                 case PropertyTypes.StructProperty: return new DomainPropertyStructValue();
                 case PropertyTypes.ArrayProperty: return new DomainPropertyArrayValue();
+                case PropertyTypes.FontFullNameArray:
+                case PropertyTypes.FontStyleNameArray:
+                case PropertyTypes.FontFamilyNameArray:
+                case PropertyTypes.NameArray: return new DomainPropertyNameArray();
 
                 default: return new DomainPropertyValueBase();
             }

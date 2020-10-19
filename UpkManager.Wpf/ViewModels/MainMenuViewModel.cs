@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 
 using STR.MvvmCommon;
-
+using UpkManager.Wpf.Controllers;
 
 namespace UpkManager.Wpf.ViewModels
 {
@@ -41,6 +41,7 @@ namespace UpkManager.Wpf.ViewModels
         private bool isWeightingEnabled;
 
         private RelayCommandAsync reloadFiles;
+        private RelayCommandAsync loadExportFiles;
 
         private RelayCommandAsync rebuildExported;
         private RelayCommand deleteExported;
@@ -59,6 +60,8 @@ namespace UpkManager.Wpf.ViewModels
         private RelayCommand about;
 
         private RelayCommand exit;
+
+        public RebuildController rebuildController;
 
         #endregion Private Fields
 
@@ -90,8 +93,8 @@ namespace UpkManager.Wpf.ViewModels
 
         public bool IsOfflineMode
         {
-            get { return isOfflineMode; }
-            set { SetField(ref isOfflineMode, value, () => IsOfflineMode); }
+            get { return true; }
+            set { SetField(ref isOfflineMode, true, () => IsOfflineMode); }
         }
 
         public bool IsViewRawData
@@ -158,6 +161,12 @@ namespace UpkManager.Wpf.ViewModels
         {
             get { return isWeightingEnabled; }
             set { SetField(ref isWeightingEnabled, value, () => IsWeightingEnabled); }
+        }
+
+        public RelayCommandAsync LoadExportFiles
+        {
+            get { return loadExportFiles; }
+            set { SetField(ref loadExportFiles, value, () => LoadExportFiles); }
         }
 
         public RelayCommandAsync ReloadFiles

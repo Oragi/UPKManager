@@ -55,7 +55,7 @@ namespace UpkManager.Domain.Models.UpkFile.Properties
 
         public override async Task WriteBuffer(ByteArrayWriter Writer, int CurrentOffset)
         {
-            await Writer.WriteBytes(DataReader?.GetBytes());
+            Writer.WriteBytes(DataReader?.GetBytes());
         }
 
         #endregion DomainUpkBuilderBase Implementation

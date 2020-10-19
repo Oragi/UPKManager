@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using UpkManager.Domain.Constants;
 using UpkManager.Domain.Helpers;
 using UpkManager.Domain.Models.UpkFile.Objects;
+using UpkManager.Domain.Models.UpkFile.Objects.Resources;
 using UpkManager.Domain.Models.UpkFile.Objects.Sounds;
 using UpkManager.Domain.Models.UpkFile.Objects.Textures;
 
@@ -193,11 +194,11 @@ namespace UpkManager.Domain.Models.UpkFile.Tables
 
             Writer.WriteInt32(NetObjectCount);
 
-            await Writer.WriteBytes(Guid);
+            Writer.WriteBytes(Guid);
 
             Writer.WriteUInt32(Unknown1);
 
-            await Writer.WriteBytes(Unknown2);
+            Writer.WriteBytes(Unknown2);
         }
 
         public override async Task<ByteArrayWriter> WriteObjectBuffer()
@@ -233,6 +234,7 @@ namespace UpkManager.Domain.Models.UpkFile.Tables
                 case ObjectTypes.SoundNodeWave: return new DomainObjectSoundNodeWave();
                 case ObjectTypes.Texture2D: return new DomainObjectTexture2D();
                 case ObjectTypes.TextureMovie: return new DomainObjectTextureMovie();
+                case ObjectTypes.FontResource: return new DomainObjectFontResource();
 
                 default: return new DomainObjectBase();
             }

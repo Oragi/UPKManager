@@ -150,6 +150,9 @@ namespace UpkManager.Domain.Models.UpkFile.Objects.Textures
 
             DomainPropertyByteValue pfFormat = PropertyHeader.GetProperty("Format").FirstOrDefault()?.Value as DomainPropertyByteValue;
 
+            DomainNameTableEntry formatTableEntry_Before = nameTable.SingleOrDefault(nt => nt.Name.String == "PF_A8R8G8B8") ?? nameTable.AddDomainNameTableEntry("PF_A8R8G8B8");
+            pfFormat.SetPropertyValue(formatTableEntry_Before);
+
             FileFormat imageFormat = FileFormat.Unknown;
 
             if (pfFormat != null) imageFormat = DdsPixelFormat.ParseFileFormat(pfFormat.PropertyString);
@@ -248,7 +251,7 @@ namespace UpkManager.Domain.Models.UpkFile.Objects.Textures
                 Writer.WriteInt32(MipMaps[i].Height);
             }
 
-            await Writer.WriteBytes(Guid);
+            Writer.WriteBytes(Guid);
         }
 
         #endregion DomainUpkBuilderBase Implementation

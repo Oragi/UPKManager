@@ -12,7 +12,9 @@ namespace UpkManager.Domain.Constants
 
         Movie,
 
-        Sound
+        Sound,
+
+        Font
 
     }
 

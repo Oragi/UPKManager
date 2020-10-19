@@ -6,7 +6,6 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-
 using AutoMapper;
 
 using STR.Common.Extensions;
@@ -39,6 +38,7 @@ namespace UpkManager.Wpf.Controllers
 {
 
     [Export(typeof(IController))]
+    [ViewModel("RebuildController")]
     public sealed class RebuildController : IController
     {
 
@@ -70,6 +70,8 @@ namespace UpkManager.Wpf.Controllers
         {
             viewModel = ViewModel;
             menuViewModel = MenuViewModel;
+
+            menuViewModel.rebuildController = this;
 
             menuViewModel.IsDdsDefault = true;
 
@@ -310,6 +312,8 @@ namespace UpkManager.Wpf.Controllers
 
         private void setupWatchers()
         {
+            return;
+
             if (String.IsNullOrEmpty(settings.ExportPath)) return;
 
             fileWatcher = new FileSystemWatcher
@@ -338,8 +342,9 @@ namespace UpkManager.Wpf.Controllers
             loadExportFiles();
         }
 
-        private async void loadExportFiles()
+        public async void loadExportFiles()
         {
+
             if (String.IsNullOrEmpty(settings.ExportPath)) return;
 
             try
@@ -366,7 +371,7 @@ namespace UpkManager.Wpf.Controllers
             }
         }
 
-        private void onExportedObjectViewEntityChanged(object sender, PropertyChangedEventArgs args)
+        public void onExportedObjectViewEntityChanged(object sender, PropertyChangedEventArgs args)
         {
             if (isSelf) return;
 
@@ -454,7 +459,7 @@ namespace UpkManager.Wpf.Controllers
 
                 foreach (ExportedObjectViewEntity entity in pair.Value)
                 {
-                    DomainExportTableEntry export = header.ExportTable.SingleOrDefault(ex => ex.NameTableIndex.Name.Equals(Path.GetFileNameWithoutExtension(entity.Filename), StringComparison.CurrentCultureIgnoreCase));
+                    DomainExportTableEntry export = header.ExportTable.FirstOrDefault(ex => ex.NameTableIndex.Name.Equals(Path.GetFileNameWithoutExtension(entity.Filename), StringComparison.CurrentCultureIgnoreCase));
 
                     if (export == null) continue;
 

@@ -65,7 +65,7 @@ namespace UpkManager.Domain.Models.UpkFile.Compression
 
         public async Task WriteCompressedChunkBlockData(ByteArrayWriter Writer)
         {
-            await Writer.WriteBytes(CompressedData.GetBytes());
+            Writer.WriteBytes(CompressedData.GetBytes());
         }
 
         #endregion Domain Methods

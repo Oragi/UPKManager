@@ -20,7 +20,9 @@ namespace UpkManager.Domain.Constants
 
         Texture2D,
 
-        TextureMovie
+        TextureMovie,
+
+        FontResource
 
     }
 

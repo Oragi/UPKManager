@@ -11,6 +11,13 @@ namespace UpkManager.Domain.Models.UpkFile
 
     public class DomainString : DomainUpkBuilderBase
     {
+        #region Constructor
+        public DomainString(string text)
+        {
+            SetString(text);
+        }
+        public DomainString() { }
+        #endregion Constructor
 
         #region Properties
 
@@ -37,7 +44,9 @@ namespace UpkManager.Domain.Models.UpkFile
             {
                 int size = -Size * 2;
 
-                byte[] str = await reader.ReadBytes(size);
+                byte[] str = await reader.ReadBytes(size - 2);
+
+                reader.Skip(2); // NULL Terminator
 
                 String = Encoding.Unicode.GetString(str);
             }
@@ -65,7 +74,7 @@ namespace UpkManager.Domain.Models.UpkFile
         public override int GetBuilderSize()
         {
             BuilderSize = sizeof(int)
-                        + (Size < 0 ? String.Length * 2 : String.Length + 1);
+                        + (Size < 0 ? String.Length * 2 + 2 : String.Length + 1);
 
             return BuilderSize;
         }
@@ -76,11 +85,14 @@ namespace UpkManager.Domain.Models.UpkFile
 
             if (Size < 0)
             {
-                await Writer.WriteBytes(Encoding.Unicode.GetBytes(String));
+                Writer.WriteBytes(Encoding.Unicode.GetBytes(String));
+
+                Writer.WriteByte(0);
+                Writer.WriteByte(0);
             }
             else
             {
-                await Writer.WriteBytes(Encoding.ASCII.GetBytes(String));
+                Writer.WriteBytes(Encoding.ASCII.GetBytes(String));
 
                 Writer.WriteByte(0);
             }
@@ -99,6 +111,10 @@ namespace UpkManager.Domain.Models.UpkFile
 
         #endregion Private Methods
 
+        public override string ToString()
+        {
+            return String;
+        }
     }
 
 }

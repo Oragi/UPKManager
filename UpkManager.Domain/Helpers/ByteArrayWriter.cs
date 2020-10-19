@@ -106,13 +106,24 @@ namespace UpkManager.Domain.Helpers
             Array.ConstrainedCopy(bytes, 0, data, index, sizeof(float)); index += sizeof(float);
         }
 
-        public async Task WriteBytes(byte[] Bytes)
+        // async Task WriteBytes had a lot of race condition issues
+        /* public async Task WriteBytes(byte[] Bytes) {
+          if (Bytes == null || Bytes.Length == 0) return;
+
+          if (Bytes.Length + index > data.Length) throw new ArgumentOutOfRangeException(nameof(Bytes), "Current Index + Bytes.Length is out of bounds of the byte array.");
+
+          await Task.Run(() => Array.ConstrainedCopy(Bytes, 0, data, index, Bytes.Length));
+
+          index += Bytes.Length;
+        } */
+
+        public void WriteBytes(byte[] Bytes)
         {
             if (Bytes == null || Bytes.Length == 0) return;
 
             if (Bytes.Length + index > data.Length) throw new ArgumentOutOfRangeException(nameof(Bytes), "Current Index + Bytes.Length is out of bounds of the byte array.");
 
-            await Task.Run(() => Array.ConstrainedCopy(Bytes, 0, data, index, Bytes.Length));
+            Array.ConstrainedCopy(Bytes, 0, data, index, Bytes.Length);
 
             index += Bytes.Length;
         }
